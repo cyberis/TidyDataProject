@@ -5,6 +5,8 @@
 
 # Load Required Libraries
 library(data.table)  # Used for faster data mutation
+library(plyr) # Used for summarizing the data
+#library(reshape2) # Used to reshape the data into a set of means by subject and activity
 
 # Setup some global configuration variables
 resetData <- FALSE  # If this is set to true, remove the data directory and start fresh
@@ -149,5 +151,13 @@ dtTrain <- cbind(dtSubjectTrn, dtActivityTrn, dtFeatureTrn)
 dtData <- rbindlist(list(dtTrain,dtTest))
 
 # Step 8: Set Key for Optimal Sorting and subsetting
+setkey(dtData, Subject.ID, Activity)
+dtData$Activity.ID <- NULL  #We no longer need this column
 
+# Step 9: Create our Tidy Data Set from our big data table
+dtMelt <- melt(dtData, id = c("Subject.ID", "Activity"))
+tidyData <- dcast(dtMelt, Subject.ID + Activity ~ variable, mean)
+
+# Step 10: Write out Our Tidy Data Set
+write.table(tidyData, "./data/UCITidyData.txt", row.names = FALSE)
 
