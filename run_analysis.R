@@ -141,11 +141,13 @@ setnames(dtActivityTrn, "Activity.ID")
 dtActivityTst[,Activity:=factor(Activity.ID, labels = activityNames)]
 dtActivityTrn[,Activity:=factor(Activity.ID, labels = activityNames)]
 
-# Step 6: Join the Test data tables together
+# Step 6: Join the Test data tables together and the Traning Tables together
+dtTest <- cbind(dtSubjectTst, dtActivityTst, dtFeatureTst)
+dtTrain <- cbind(dtSubjectTrn, dtActivityTrn, dtFeatureTrn)
 
+# Step 7: Combine the Test Data and the Training Data
+dtData <- rbindlist(list(dtTrain,dtTest))
 
-# Step 7: Join the Training data tables together
+# Step 8: Set Key for Optimal Sorting and subsetting
 
-
-# Step 8: Combine the Test Data and the Training Data
 
