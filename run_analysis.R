@@ -3,6 +3,9 @@
 # For Getting and Cleaning Data, Dr. J, Section 004, June 2 - 30, 2014
 # Course Peer-Assessed Project
 
+# Load Required Libraries
+library(data.table)  # Used for faster data mutation
+
 # Setup some global configuration variables
 resetData <- FALSE  # If this is set to true, remove the data directory and start fresh
 
@@ -78,8 +81,8 @@ featureNames <- c("Mean.BodyAccelerationTS.X",             # Col  1 <- Col   1: 
                   "STD.BodyGyroscopeJerkMagnitudeFFT"      # Col 66 <- Col 543: fBodyBodyGyroJerkMag-std()
                   )
 
-# Load Required Libraries
-library(data.table)  # Used for faster data mutation
+# Setup Friendly Activity Names
+activityNames <- c("Walking", "Walking Upstairs", "Walking Downstairs", "Sitting", "Standing", "Laying")
 
 # Step 0: If reseting data delete existing data directory
 if(resetData) {
@@ -125,3 +128,24 @@ dtFeatureTrn <- fread("./data/UCI HAR Dataset/train/feature_train.txt",
                       select = featureCols)
 dtSubjectTrn <- fread("./data/UCI HAR Dataset/train/subject_train.txt")
 dtActivityTrn <- fread("./data/UCI HAR Dataset/train/y_train.txt")
+
+# Step 4: Add Column Names to data table columns (setnames is fast with no copy of data table)
+setnames(dtFeatureTst, featureNames)
+setnames(dtSubjectTst, "Subject.ID")
+setnames(dtActivityTst, "Activity.ID")
+setnames(dtFeatureTrn, featureNames)
+setnames(dtSubjectTrn, "Subject.ID")
+setnames(dtActivityTrn, "Activity.ID")
+
+# Step 5: Add a factor with friendly names to the Activity data table
+dtActivityTst[,Activity:=factor(Activity.ID, labels = activityNames)]
+dtActivityTrn[,Activity:=factor(Activity.ID, labels = activityNames)]
+
+# Step 6: Join the Test data tables together
+
+
+# Step 7: Join the Training data tables together
+
+
+# Step 8: Combine the Test Data and the Training Data
+
