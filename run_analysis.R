@@ -6,7 +6,7 @@
 # Load Required Libraries
 library(data.table)  # Used for faster data mutation
 library(plyr) # Used for summarizing the data
-#library(reshape2) # Used to reshape the data into a set of means by subject and activity
+library(reshape2) # Used to reshape the data into a set of means by subject and activity
 
 # Setup some global configuration variables
 resetData <- FALSE  # If this is set to true, remove the data directory and start fresh
