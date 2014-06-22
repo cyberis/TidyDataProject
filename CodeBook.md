@@ -7,10 +7,6 @@ The tidy data set is contained in a file named UCITidyData.txt. It is a space de
 ## Data Columns
 The column layout and mapping from the original is listed below:
 
-## Data Transformations Performed
-
-## Description of Raw Summary Data
-
 Col # | Origin File | Column Name | New Col # | Original Col # | Original Column Name
 ----- | ----------- | ----------- | --------- | -------------- | --------------------
 01 | subject_*.txt | Subject.ID | Col 1 | Col 1 | N/A
