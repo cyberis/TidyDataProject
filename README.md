@@ -20,14 +20,20 @@ The data to be downloaded and processed is at: https://d396qusza40orc.cloudfront
 6. The final data set should only have one row for each unique combination of subject (there are 30) and activity (there are 6) where an average is taken of each of the 66 extracted feature variables. Together with the subject ID and a friendly label for the activity, that leaves 180 rows of data with 68 columns plus a header row with labels.
 
 ## How to Get a Tidy Data Set
-1. Make sure you have installed the data.table, plyr and reshape2 packages.
+Make sure you have installed the data.table, plyr and reshape2 packages.
 ```{r}
 install.packages(c("data.table", "plyr", "reshape2"))
 ```
-2. run the run_analysis.R script
+Run the run_analysis.R script
 ```{r}
 source("run_analysis.R")
 ```
 
-The script is a soup to nuts self contained script. It will create a data subdirectory if it doesn't exist, download the zip file, unzip the zip file, load and transform the data, and output a Tidy dataset in the data directory **./data/UCITidyData.txt**
+The script is a soup to nuts self contained script. It will create a data subdirectory if it doesn't exist, download the zip file, unzip the zip file, load and transform the data, and output a Tidy dataset in the data directory **./data/UCITidyData.txt**.
+## How to Load my Tidy Data
+The data set created by the script is a space delimited, quoted text file with headers in the first row. You can load this into your favorite spreadsheet program or you read.table() with the defaults to load it into R. Assuming that you left the data file in the default location after creating it with my script that would look like:
+```{r}
+tidyData <- read.table("./data/UCITidyData.txt", header = TRUE, stringsAsFactors = FALSE)
+```
+**Note:** You could also set stringsAsFactors = TRUE and use the activity as a factor. It will work either way.
 [1]: http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
