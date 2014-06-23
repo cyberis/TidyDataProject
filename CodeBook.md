@@ -2,12 +2,12 @@
 This is the code book for the single tidy data set (***UCITidyData.txt***) that is created by the processing script, run_analysis.R.
 
 ## File Description
-The tidy data set is contained in a file named UCITidyData.txt. It is a space delimited text file with 181 rows (incuding 1 header row) with 68 observations (1 subject id, 1 activity name and 66 feature variables). The data consists of one row per subject (1-30) performing six different activities (Walking, Walking Upstairs, Walking Downstairs, Sitting, Standing, Laying down) with the average of 66 different measurements taken for each combination of subject and activity. The data is orderd by subject id and then by activity as listed above. Thus there are 180 (30 subjects * 6 Activities) rows of summarized data.
+The tidy data set is contained in a file named UCITidyData.txt. It is a space-delimited text file with 181 rows (*incuding 1 header row*) with 68 observations (*1 subject id, 1 activity name and 66 feature variables in that order*) per row. The data consists of one row for each subject (*1-30*) performing each of six different activities (*Walking, Walking Upstairs, Walking Downstairs, Sitting, Standing, Laying down*) with the average of each of the 66 different measurements taken for each combination of subject and activity. The data is orderd by subject id and then by activity as listed above. Thus there are 180 (*30 subjects * 6 Activities*) rows of summarized data.
 
 ## Data Columns
 The column layout and mapping from the original is listed below:
 
-Col # | Origin File | Column Name | New Col # | Original Col # | Original Column Name
+Col # | Source File | Tidy Data Column Name | New Col # | Source Col # | Source  Column Name
 ----- | ----------- | ----------- | --------- | -------------- | --------------------
 01 | subject_*.txt | Subject.ID | Col 1 | Col 1 | N/A
 02 | y_*.txt | Activity | Col 1 | Col 1 | N/A
@@ -79,21 +79,21 @@ Col # | Origin File | Column Name | New Col # | Original Col # | Original Column
 68 | X_*.txt | STD.BodyGyroscopeJerkMagnitudeFreq |  Col 66 | Col 543 | fBodyBodyGyroJerkMag-std()
 
 ## Scripted Transformations
-1. Downloaded the Zip file
+1. Downloaded the zip file
 2. Unzipped the zip file
-3. Read the feature files (X_*.txt) using read.table() and then rewrote using write.table() to feature_*.txt. This was to remove the leading spaces which cause fread() to barf.
-3. Used data.table::fread() to read in the files feature_*.txt, y_*.txt and subject_*.txt into data.tables (data.tables are MUCH faster than data.frames and scale very well to large data sets). Because I used fread() I could read in just the feature columns I needed very fast and not take up wasted memory for data I was going to throw away.
-4. Added a factor to translate activity ids to activity names
-5. Bound the Test Tables together with cbind() from subject to activity to features
-6. Also used cbind on the Training Tables with cbind() from subject to activity to features
-Used data.table::rbindlist() to bind the Training Data and Test data together. This is also much faster than rbind().
-Set a key on the resulting data table using Subject and Activity name factor to sort the table.
-7. Dropped the activity id column.
-8. Used the melt and dcast functions to create a mean for every feature variable grouped by each unique combination of subject and activity.
-9. Wrote out the resulting tidy data set to ./data/UCITidyData.txt
+3. Read the feature files (X\_\*.txt) using read.table() and then rewrote using write.table() to feature\_\*.txt. This was to remove the leading spaces which cause fread() to barf.
+4. Used data.table::fread() to read in the files feature\_\*.txt, y\_\*.txt and subject\_\*.txt into data.tables (***data.tables are MUCH faster than data.frames and scale very well to large data sets***). Because I used fread() I could read in just the feature columns I needed very fast and not take up wasted memory for data I was going to throw away.
+5. Added a factor to translate activity ids to activity names.
+6. Bound the test tables together with cbind() in order of subject, activity, and features.
+7. Also used cbind on the Training Tables with cbind() from subject to activity to features
+8. Used data.table::rbindlist() to bind the training data and test data together. This is also much faster than rbind().
+9. Set a key on the resulting data table using Subject.ID and Activity name factor to sort the table.
+10. Dropped the Activity.ID column.
+11. Used the melt and dcast functions to create a mean for every feature variable grouped by each unique combination of subject and activity.
+12. Wrote out the resulting tidy data set to ./data/UCITidyData.txt
 
 ## Description of the raw feature data
-This is taken directly from the code book in the original data set (README.txt and features.txt and feature_info.txt):
+This is taken directly from the code book in the original data set (*README.txt, features.txt and feature_info.txt*):
 
 The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, we captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz. The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% of the volunteers was selected for generating the training data and 30% the test data. 
 

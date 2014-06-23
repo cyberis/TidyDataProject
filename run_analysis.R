@@ -5,7 +5,6 @@
 
 # Load Required Libraries
 library(data.table)  # Used for faster data mutation
-library(plyr) # Used for summarizing the data
 library(reshape2) # Used to reshape the data into a set of means by subject and activity
 
 # Setup some global configuration variables
@@ -161,7 +160,7 @@ dtData <- rbindlist(list(dtTrain,dtTest))
 
 # Step 8: Set Key for Optimal Sorting and subsetting
 setkey(dtData, Subject.ID, Activity)
-dtData$Activity.ID <- NULL  #We no longer need this column
+dtData[ , Activity.ID := NULL]  # We no longer need this column
 
 # Step 9: Create our Tidy Data Set from our big data table
 cat("Summarizing data...\n")
