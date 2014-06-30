@@ -85,7 +85,7 @@ Col # | Source File | Tidy Data Column Name | New Col # | Source Col # | Source 
 4. Used data.table::fread() to read in the files feature\_\*.txt, y\_\*.txt and subject\_\*.txt into data.tables (***data.tables are MUCH faster than data.frames and scale very well to large data sets***). Because I used fread() I could read in just the feature columns I needed very fast and not take up wasted memory for data I was going to throw away.
 5. Added a factor to translate activity ids to activity names.
 6. Bound the test tables together with cbind() in order of subject, activity, and features.
-7. Also used cbind on the Training Tables with cbind() from subject to activity to features
+7. Also bound the training tables together with cbind() in order of subject, activity, and features
 8. Used data.table::rbindlist() to bind the training data and test data together. This is also much faster than rbind().
 9. Set a key on the resulting data table using Subject.ID and Activity name factor to sort the table.
 10. Dropped the Activity.ID column.

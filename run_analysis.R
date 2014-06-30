@@ -168,7 +168,7 @@ dtMelt <- melt(dtData, id = c("Subject.ID", "Activity"))
 tidyData <- dcast(dtMelt, Subject.ID + Activity ~ variable, mean)
 
 # Step 10: Write out Our Tidy Data Set
-cat("Writing Tidy Data set to ./dataUCITidyData.txt...\n")
+cat("Writing Tidy Data set to ./data/UCITidyData.txt...\n")
 write.table(tidyData, "./data/UCITidyData.txt", row.names = FALSE)
 
 # Step 11: Clean up - Remove Intermediate data tables
